@@ -27,4 +27,31 @@ RSpec.feature "Search by director" do
     expect(page.current_path).to eq(movies_path)
   end 
   
+  scenario "add new movie" do
+    visit "/"
+    click_link "Add new movie"
+    fill_in "Title", with: "Kungfu Panda"
+    fill_in "Director", with: "Ridley Scott"
+    click_button "Save Changes"
+    
+    expect(page).to have_content("Kungfu Panda")
+    expect(page.current_path).to eq(movies_path)
+  end 
+  
+  scenario "delete movie" do
+    visit "/movies/1"
+    click_button "Delete"
+    
+    expect(page).to have_content("deleted")
+    expect(page.current_path).to eq(movies_path)
+  end 
+  
+  scenario "sort by title" do
+    visit "/"
+    click_link "Movie Title"
+    expect(page.current_path).to eq(movies_path)
+    click_link "Release Date"
+    expect(page.current_path).to eq(movies_path)
+  end 
+  
 end
